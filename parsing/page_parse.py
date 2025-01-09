@@ -1,10 +1,12 @@
 from urllib.request import urlopen
 from utils.driver_config import chromeDriver
+from utils.thread_workers import Threads
 from bs4 import BeautifulSoup
 import re
 import urllib
 import ssl
 from concurrent.futures import ThreadPoolExecutor, as_completed
+
 import sys
 
 
@@ -20,7 +22,7 @@ class Page:
 
    
 
-    def getPageLinks(self,base_website_path,index):
+    def GetPageLinks(self,base_website_path,index):
         driver = self.chrome.initDriver()
         
         
@@ -40,7 +42,7 @@ class Page:
         
 
 
-    def accessPageIndex(self,index):
+    def AccessPageIndex(self,index):
         driver = self.chrome.initDriver()
 
         page_count = self.countPage()
@@ -50,24 +52,28 @@ class Page:
         request_url = self.links[index]
         print(request_url)
 
+    
 
-def processPage(page:Page,base_website_path,page_range):
-    def fetch_links(index):
-        page.getPageLinks(base_website_path, index)
+def ProcessPage(page:Page,config):
+    print(config)
+    base_website_path = config['base_url']
+    max_thread = config['max_thread']
+    start_page = config['start_page']
+    end_page = config['end_page']
+    page_range = range(int(start_page),int(end_page))
 
-    max_threads = 5  # Tùy chỉnh số threads phù hợp với tài nguyên máy
+    def fetch_page_links(index):
+        page.GetPageLinks(base_website_path, index)
+
     # Sử dụng ThreadPoolExecutor để chạy song song
-    with ThreadPoolExecutor(max_workers=max_threads) as executor:
-        future_to_index = {executor.submit(fetch_links, index): index for index in page_range}
+    thread = Threads(max_thread)
+    thread.ExecWithThreadWorkerWithIndex(fetch_page_links,page_range)
+    
 
-        # Duyệt qua từng thread và kiểm tra trạng thái hoàn thành
-        for future in as_completed(future_to_index):
-            index = future_to_index[future]
-            try:
-                future.result()  # Lấy kết quả để bắt lỗi (nếu có)
-                print(f"Page {index} processed successfully.")
-            except Exception as e:
-                print(f"Error processing page {index}: {e}")
+
+def TransformToPageInfo(page_range):
+    thread = Threads(5)
+
 
 
 
