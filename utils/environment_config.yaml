@@ -1,0 +1,11 @@
+dev:
+  start_page: 1
+  end_page: 5
+  page_max: 54
+  base_url: https://www.viettelidc.com.vn/tin-tuc/
+
+prod:
+  start_page: 1
+  end_page: 53
+  page_max: 54
+  base_url: https://www.viettelidc.com.vn/tin-tuc/
