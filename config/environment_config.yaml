@@ -1,13 +1,14 @@
 dev:
   start_page: 1
-  end_page: 5
+  end_page: 3
   page_max: 54
-  base_url: https://www.viettelidc.com.vn/tin-tuc/
-  max_thread: 5
+  base_url: https://www.viettelidc.com.vn
+  max_thread: 1
+  data_raw_path: "raw_post/posts.json"
 
 prod:
   start_page: 1
   end_page: 53
   page_max: 54
-  base_url: https://www.viettelidc.com.vn/tin-tuc/
+  base_url: https://www.viettelidc.com.vn
   max_thread: 5

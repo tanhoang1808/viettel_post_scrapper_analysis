@@ -7,9 +7,12 @@ class Threads:
         params : threads -> max thread use to generate workers
         """
         self.max_threads = threads
+        self.executor = ThreadPoolExecutor(max_workers=self.max_threads)
+
 
     def ExecWithThreadWorkerWithIndex(self,fn,indexes):
         with ThreadPoolExecutor(max_workers=self.max_threads) as executor:
+            
             future_to_index = {executor.submit(fn, index): index for index in indexes}
 
             # Duyệt qua từng thread và kiểm tra trạng thái hoàn thành
@@ -23,3 +26,19 @@ class Threads:
 
     def ShowMaxWorkers(self):
         return self.max_threads
+
+    def ExecWithThreadWorkerWithList(self,fn,list:list):
+        print(f"You are working on ${self.max_threads} worker")
+         
+         
+        future_to_item = {self.executor.submit(fn, item): item for item in list}
+            
+            # Duyệt qua từng thread và kiểm tra trạng thái hoàn thành
+        for future in as_completed(future_to_item):
+            item = future_to_item[future]
+            print("item : ",item)
+            try:
+                future.result()  # Lấy kết quả để bắt lỗi (nếu có)
+                print(f"{item} processed successfully.")
+            except Exception as e:
+                print(f"Error processing page {item}: {e}")

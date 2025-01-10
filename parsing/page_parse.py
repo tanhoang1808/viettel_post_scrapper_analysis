@@ -1,13 +1,6 @@
-from urllib.request import urlopen
 from utils.driver_config import chromeDriver
 from utils.thread_workers import Threads
 from bs4 import BeautifulSoup
-import re
-import urllib
-import ssl
-from concurrent.futures import ThreadPoolExecutor, as_completed
-
-import sys
 
 
 class Page:
@@ -26,7 +19,7 @@ class Page:
         driver = self.chrome.initDriver()
         
         
-        request_url = base_website_path +"?page="+str(index)  # 'https://www.viettelidc.com.vn/tin-tuc?Page=2'
+        request_url = base_website_path +'/tin-tuc/'+"?page="+str(index)  # 'https://www.viettelidc.com.vn/tin-tuc?Page=2'
         driver.get(request_url)
         
         html = driver.page_source
@@ -36,26 +29,40 @@ class Page:
         items = bs.find_all('div',class_='news-wrapper')
         for item in items:
         
-            link = item.find('a').get('href')
+            link = base_website_path + str(item.find('a').get('href'))
             self.links.append(link)
         
         
-
-
-    def AccessPageIndex(self,index):
+    def AccessPageItem(self, item, posts):
+        print("called AccccessPageItem")
         driver = self.chrome.initDriver()
-
-        page_count = self.countPage()
-        if (index > page_count): 
-            raise IndexError('Index is exceed pages , try again')
         
-        request_url = self.links[index]
-        print(request_url)
+        try:
+            index = self.links.index(item)
+            print("index : ",index)
+            driver.get(self.links[index])
+            html = driver.page_source
+            bs = BeautifulSoup(html, 'html.parser')
+            if bs:
+                
+                title = bs.find('div', class_='news-detail-head').find('h1').get_text()
+                content = bs.find('div', class_='news-detail-body').find('div', class_='news-content').get_text()
+                post = PostInfo(title, content, self.links[index])
+                posts.append(post)
+            else:
+                print("BeautifulSoup found no content.")
+        finally:
+            driver.quit()
+            
+        
+        
+        
+
 
     
 
 def ProcessPage(page:Page,config):
-    print(config)
+    print("config : ",config)
     base_website_path = config['base_url']
     max_thread = config['max_thread']
     start_page = config['start_page']
@@ -70,9 +77,24 @@ def ProcessPage(page:Page,config):
     thread.ExecWithThreadWorkerWithIndex(fetch_page_links,page_range)
     
 
+    
 
-def TransformToPageInfo(page_range):
-    thread = Threads(5)
+
+
+def TransformToPageInfo(page:Page,config) -> list:
+    max_thread = config['max_thread']
+    thread = Threads(max_thread)
+    
+    posts = []
+    list_of_posts = page.links
+    
+    def fetch_post(item):
+        page.AccessPageItem(item,posts)
+
+    thread.ExecWithThreadWorkerWithList(fetch_post,list_of_posts) 
+
+    print(f'there are total : ${len(posts)} posts')
+    return posts
 
 
 
@@ -85,3 +107,5 @@ class PostInfo(Page):
         self.title = title
         self.content = content
         self.link = link
+
+
