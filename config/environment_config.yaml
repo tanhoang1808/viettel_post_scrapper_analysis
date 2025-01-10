@@ -1,14 +1,16 @@
-dev:
-  start_page: 1
-  end_page: 3
-  page_max: 54
-  base_url: https://www.viettelidc.com.vn
-  max_thread: 1
-  data_raw_path: "raw_post/posts.json"
-
-prod:
-  start_page: 1
-  end_page: 53
-  page_max: 54
-  base_url: https://www.viettelidc.com.vn
-  max_thread: 1
+use_thread: False
+target:
+  dev:
+    start_page: 1
+    end_page: 3
+    page_max: 54
+    base_url: https://www.viettelidc.com.vn
+    max_thread: 1
+    data_raw_path: "raw_post/posts.json"
+  prod:
+    start_page: 1
+    end_page: 53
+    page_max: 54
+    base_url: https://www.viettelidc.com.vn
+    max_thread: 1
+    data_raw_path: "raw_post/posts.json"

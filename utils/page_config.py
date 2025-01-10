@@ -1,17 +1,13 @@
 import yaml
+from yaml_config import InitYamlConfig
 
-import os
 
+def readPageConfig(target_environment):
 
-def readPageConfig(target_environment='dev'):
-
-    config = initYamlConfig()
-    environment_runtime = config[target_environment]
+    config = InitYamlConfig()
+    environment_runtime = config['target'][target_environment]
     
     
     return environment_runtime
 
-def initYamlConfig(file_path='config/environment_config.yaml'):
-    with open(file_path,'r') as file:
-        config = yaml.safe_load(file)
-        return config
+

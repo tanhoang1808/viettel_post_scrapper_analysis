@@ -2,12 +2,18 @@ from utils.driver_config import chromeDriver
 from utils.thread_workers import Threads
 from bs4 import BeautifulSoup
 
-
 class Page:
     def __init__(self,links:list):
         self.links = links
-        self.chrome = chromeDriver()
+        self.chrome_driver = chromeDriver().initDriver()
         
+
+    def InitDriver(self):
+        return self.chrome_driver
+
+    def CloseDriver(self):
+        if self.chrome_driver:
+            self.chrome_driver.quit()
 
     def countPage(self):
         return len( self.links)
@@ -16,7 +22,7 @@ class Page:
    
 
     def GetPageLinks(self,base_website_path,index):
-        driver = self.chrome.initDriver()
+        driver = self.InitDriver()
         
         
         request_url = base_website_path +'/tin-tuc/'+"?page="+str(index)  # 'https://www.viettelidc.com.vn/tin-tuc?Page=2'
@@ -35,7 +41,7 @@ class Page:
         
     def AccessPageItem(self, item, posts,base_url):
         print("called AccccessPageItem")
-        driver = self.chrome.initDriver()
+        driver = self.InitDriver()
         
         try:
             index = self.links.index(item)
@@ -54,16 +60,26 @@ class Page:
             else:
                 print("BeautifulSoup found no content.")
         finally:
-            driver.quit()
+            # self.CloseDriver()
+            pass    
             
         
         
         
+def ProcessPage(page:Page,config):
+    print("config : ",config)
+    base_website_path = config['base_url']
+    max_thread = config['max_thread']
+    start_page = config['start_page']
+    end_page = config['end_page']
 
+    for index in range(int(start_page), int(end_page)):
+        page.GetPageLinks(base_website_path, index)
+    
 
     
 
-def ProcessPage(page:Page,config):
+def ProcessPageWithThreads(page:Page,config):
     print("config : ",config)
     base_website_path = config['base_url']
     max_thread = config['max_thread']
@@ -81,9 +97,20 @@ def ProcessPage(page:Page,config):
 
     
 
-
-
 def TransformToPageInfo(page:Page,config) -> list:
+    max_thread = config['max_thread']
+    base_url = config['base_url']
+    
+    posts = []
+    list_of_posts = page.links
+    
+    for item in page.links:
+        page.AccessPageItem(item, posts, base_url)
+    return posts
+
+
+
+def TransformToPageInfoWithThreads(page:Page,config) -> list:
     max_thread = config['max_thread']
     base_url = config['base_url']
     thread = Threads(max_thread)

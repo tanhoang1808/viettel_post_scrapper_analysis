@@ -1,34 +1,45 @@
-from parsing.page_parse import ProcessPage,TransformToPageInfo
+from parsing.page_parse import ProcessPageWithThreads,TransformToPageInfoWithThreads
 from utils.page_config import readPageConfig
+from utils.yaml_config import OverrideConfig
 from parsing.page_parse import Page
 import sys
 import warnings
 import json
+import yaml
+import argparse
 def main():
-   
-
-    if len(sys.argv) < 2:
-        warnings.warn('You not have indicate the runtime , program will be running on dev envinroment.....',category=RuntimeWarning)
-
-
-    if len(sys.argv) == 2:
-        target_environment = sys.argv[1]
     
+    # nêu không có tham sô thì chạy ở môi trường dev
+    config = readPageConfig(target_environment='dev')
+
+    # Sử dụng argparse để truyền tham số từ terminal
+    parser = argparse.ArgumentParser(description="Run Scrapper")
+    parser.add_argument('--target', type=str, help="environment ")
+    parser.add_argument('--thread', type=bool, help="Enable thread for performance")
     
-    # base_url,page_max,start_page,end_page = readPageConfig('dev' or target_environment )
-    config = readPageConfig('dev' or target_environment)
+    args = parser.parse_args()
+
+    # Ghi đè cấu hình từ tham số terminal
+    config = OverrideConfig(config, args)
+
+    # Hiển thị cấu hình cuối cùng
+    print("Final Config:", config)
+
+    return
+
+
     file_path = config['data_raw_path']
     
     page = Page([])
 
+    print("config in main : ",config)
     
-    
-    ProcessPage(
+    ProcessPageWithThreads(
         page = page,
         config=config
     )
 
-    posts = TransformToPageInfo(
+    posts = TransformToPageInfoWithThreads(
         page = page,
         config = config
     )
@@ -39,16 +50,6 @@ def main():
             json.dump([post.__dict__ for post in posts],file,ensure_ascii=False,indent=4)
 
     
-
-
-
-     
-
-    
-    
-
-
-
 
 if __name__ == '__main__':
     main()
