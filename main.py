@@ -1,4 +1,4 @@
-from parsing.page_parse import ProcessPageWithThreads,TransformToPageInfoWithThreads
+from parsing.page_parse import ProcessPageWithThreads,TransformToPageInfoWithThreads,ProcessPage,TransformToPageInfo
 from utils.page_config import readPageConfig
 from utils.yaml_config import OverrideConfig
 from parsing.page_parse import Page
@@ -25,29 +25,48 @@ def main():
     # Hiển thị cấu hình cuối cùng
     print("Final Config:", config)
 
-    return
+    
+    
 
 
     file_path = config['data_raw_path']
     
     page = Page([])
 
-    print("config in main : ",config)
     
-    ProcessPageWithThreads(
+    if config['use_thread'] == True:
+        print("Use threads")
+        ProcessPageWithThreads(
         page = page,
         config=config
     )
 
-    posts = TransformToPageInfoWithThreads(
+        posts = TransformToPageInfoWithThreads(
+            page = page,
+            config = config
+        )
+        if posts is not None:
+            with open(file_path,encoding='utf-8',mode='a') as file:
+                json.dump([post.__dict__ for post in posts],file,ensure_ascii=False,indent=4)
+
+    else:
+        print("not use threads")
+        ProcessPage(
         page = page,
-        config = config
+        config=config
     )
 
+        posts = TransformToPageInfo(
+            page = page,
+            config = config
+        )
+        if posts is not None:
+            with open(file_path,encoding='utf-8',mode='a') as file:
+                json.dump([post.__dict__ for post in posts],file,ensure_ascii=False,indent=4)
 
-    if posts is not None:
-        with open(file_path,encoding='utf-8',mode='a') as file:
-            json.dump([post.__dict__ for post in posts],file,ensure_ascii=False,indent=4)
+
+
+    
 
     
 

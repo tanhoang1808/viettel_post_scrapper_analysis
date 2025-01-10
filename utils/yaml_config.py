@@ -14,4 +14,7 @@ def OverrideConfig(config,args):
         config['use_thread'] = args.thread
     if args.target is None:
         config['target'] = config['target']['dev']
-    return config
+
+
+    
+    return config['target'] | { "use_thread" : config['use_thread']}
