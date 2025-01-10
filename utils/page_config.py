@@ -1,13 +1,15 @@
 import yaml
-from yaml_config import InitYamlConfig
+from utils.yaml_config import InitYamlConfig
 
 
-def readPageConfig(target_environment):
+def readPageConfig(target_environment='dev',use_thread='False'):
 
     config = InitYamlConfig()
-    environment_runtime = config['target'][target_environment]
-    
-    
-    return environment_runtime
+    # config['use_thread'] = use_thread
+    # config['target'] = config['target'][target_environment]
+
+
+   
+    return config
 
 

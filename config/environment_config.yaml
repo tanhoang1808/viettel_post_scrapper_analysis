@@ -1,4 +1,6 @@
 use_thread: False
+default_target: "dev"
+
 target:
   dev:
     start_page: 1

@@ -9,8 +9,6 @@ import yaml
 import argparse
 def main():
     
-    # nêu không có tham sô thì chạy ở môi trường dev
-    config = readPageConfig(target_environment='dev')
 
     # Sử dụng argparse để truyền tham số từ terminal
     parser = argparse.ArgumentParser(description="Run Scrapper")
@@ -18,7 +16,9 @@ def main():
     parser.add_argument('--thread', type=bool, help="Enable thread for performance")
     
     args = parser.parse_args()
-
+   
+    
+    config = readPageConfig()
     # Ghi đè cấu hình từ tham số terminal
     config = OverrideConfig(config, args)
 
