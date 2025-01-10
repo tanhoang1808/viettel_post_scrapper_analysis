@@ -4,14 +4,17 @@ from selenium.webdriver.chrome.options import Options
 
 class chromeDriver:
     
-    def __init__(self,arguments:list=None,default_argument = '--headless'):
+    def __init__(self,arguments:list=None,default_argument = ['--headless','--no-sandbox']):
         """
 
         """
+        
         self.chrome_options = Options()
 
         if arguments is None:
-            self.chrome_options.add_argument(default_argument)
+            for arg in default_argument:
+                self.chrome_options.add_argument(arg)
+
 
         list_arguments = ['--headless','--disable-gpu','--no-sandbox','--disable-dev-shm-sage']
 

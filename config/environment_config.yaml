@@ -11,4 +11,4 @@ prod:
   end_page: 53
   page_max: 54
   base_url: https://www.viettelidc.com.vn
-  max_thread: 5
+  max_thread: 1
