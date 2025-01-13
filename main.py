@@ -7,17 +7,18 @@ import warnings
 import json
 import yaml
 import argparse
-def main():
-    
 
+
+
+def main():
     # Sử dụng argparse để truyền tham số từ terminal
     parser = argparse.ArgumentParser(description="Run Scrapper")
     parser.add_argument('--target', type=str, help="environment ")
-    parser.add_argument('--thread', type=bool, help="Enable thread for performance")
+    parser.add_argument('--thread', action='store_true', help="Enable thread for performance")
     
     args = parser.parse_args()
    
-    
+    print(args)
     config = readPageConfig()
     # Ghi đè cấu hình từ tham số terminal
     config = OverrideConfig(config, args)
@@ -60,6 +61,7 @@ def main():
             page = page,
             config = config
         )
+        
         if posts is not None:
             with open(file_path,encoding='utf-8',mode='a') as file:
                 json.dump([post.__dict__ for post in posts],file,ensure_ascii=False,indent=4)
