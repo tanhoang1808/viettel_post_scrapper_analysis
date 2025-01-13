@@ -32,7 +32,7 @@ python3 main.py --target prod --thread False
 
 3. Cấu hình thông tin Scrapper bằng file YAML.
 
-# Quy Trình Hoạt Động
+# Workflow
 
 1. **Cấu hình Scrapper**:
 
