@@ -6,6 +6,7 @@ class chromeDriver:
     
     def __init__(self,arguments:list=None,default_argument = ['--headless','--no-sandbox']):
         """
+        Initialize custom ChromeDriver 
 
         """
         

@@ -6,6 +6,14 @@ Dự án nhằm triển khai một Scrapper để thu thập dữ liệu các b�
 
 Dự án này hướng đến việc phân tích độ đọc hiểu của các bài viết. Từ đó, dự án có thể đề xuất những cải tiến để nâng cao thứ hạng bài viết cho Viettel. Dự án này được làm với mục đích cải thiện kỹ năng phân tích và xử lý dữ liệu .
 
+# Library & API References
+
+    - **Pandas**: Xử lý và phân tích dữ liệu.
+    - **BeautifulSoup**: Phân tích cú pháp HTML và XML.
+    - **PyYAML**: Hỗ trợ đọc và ghi file YAML.
+    - **Matplotlib** và **Seaborn**: Visualize và trực quan hóa dữ liệu.
+    - **Selenium**: Tự động hóa trình duyệt để lấy dữ liệu.
+
 # Installation
 
 1. Tạo môi trường ảo và cài đặt các thư viện cần thiết:
