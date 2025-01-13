@@ -56,6 +56,6 @@ python3 main.py --target prod --thread False
 # Contributors
 
 - Phần tích và phát triển: Nguyen Tan Hoang ( Ethan Nguyen)
-- Linked profile : [https://www.linkedin.com/in/ethannguyen2003](www.linkedin.com/in/ethannguyen2003)
+- Linked profile : [https://www.linkedin.com/in/ethannguyen2003](https://www.linkedin.com/in/ethannguyen2003)
 
 # Analysis
