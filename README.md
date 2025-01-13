@@ -11,7 +11,7 @@ Dự án này hướng đến việc phân tích độ đọc hiểu của các 
 - **Pandas**: Xử lý và phân tích dữ liệu.
 - **BeautifulSoup**: Phân tích cú pháp HTML và XML.
 - **PyYAML**: Hỗ trợ đọc và ghi file YAML.
-- **Matplotlib** và **Seaborn**: Visualize và trực quan hóa dữ liệu.
+- **Matplotlib**: Visualize và trực quan hóa dữ liệu.
 - **Selenium**: Tự động hóa trình duyệt để lấy dữ liệu.
 
 # Installation
