@@ -1,6 +1,6 @@
 # Overview
 
-Dự án nhằm triển khai một Scrapper để thu thập dữ liệu các bài viết (giới hạn phân tích bao gồm 300 bài viết) từ trang web [viettel.idc.com.vn](https://viettel.idc.com.vn). Sau đó thực hiện phân tích độ đọc hiểu của các bài viết thông qua chỉ số Gunning Fox Index.
+Dự án nhằm triển khai một Scrapper để thu thập dữ liệu các bài viết (giới hạn phân tích bao gồm 300 bài viết) từ trang web [https://www.viettelidc.com.vn/](https://www.viettelidc.com.vn/). Sau đó thực hiện phân tích độ đọc hiểu của các bài viết thông qua chỉ số Gunning Fox Index.
 
 # Motivation
 
