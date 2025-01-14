@@ -8,7 +8,7 @@ target:
     page_max: 54
     base_url: https://www.viettelidc.com.vn
     max_thread: 1
-    data_raw_path: "raw_post/posts.json"
+    data_raw_path: "/Users/mac/Desktop/Scrapper/raw_post/posts.json"
     limit_post: 10
   prod:
     start_page: 1
@@ -16,5 +16,5 @@ target:
     page_max: 54
     base_url: https://www.viettelidc.com.vn
     max_thread: 1
-    data_raw_path: "raw_post/posts.json"
+    data_raw_path: "/Users/mac/Desktop/Scrapper/raw_post/posts.json"
     limit_post: 300

@@ -46,10 +46,13 @@ def main():
             page = page,
             config = config
         )
-        if posts is not None:
-            with open(file_path,encoding='utf-8',mode='a') as file:
-                json.dump([post.__dict__ for post in posts],file,ensure_ascii=False,indent=4)
-
+        try:
+            if posts is not None:
+                with open(file_path,encoding='utf-8',mode='a') as file:
+                    json.dump([post.__dict__ for post in posts],file,ensure_ascii=False,indent=4)
+        except Exception as e:
+            print(f"Error with name {e} appeard when writing json file")
+        
     else:
         print("not use threads")
         ProcessPage(
@@ -61,12 +64,15 @@ def main():
             page = page,
             config = config
         )
+
         
         if posts is not None:
             with open(file_path,encoding='utf-8',mode='a') as file:
                 json.dump([post.__dict__ for post in posts],file,ensure_ascii=False,indent=4)
-
-
+        
+        
+        print("Scrapper successfully without error !!!")
+    
 
     
 

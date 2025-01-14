@@ -26,6 +26,14 @@ pip3 install -r requirements.txt
 
 2. Khởi chạy chương trình:
 
+- Khởi tạo chương trình trên mọi trường dev
+
+```bash
+python3 main.py --target dev --thread False
+```
+
+- Khởi tạo chương trình trên mọi trường production
+
 ```bash
 python3 main.py --target prod --thread False
 ```

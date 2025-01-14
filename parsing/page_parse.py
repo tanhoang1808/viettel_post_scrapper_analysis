@@ -46,17 +46,13 @@ class Page:
         driver = self.InitDriver()
         index = self.links.index(item)
         index = self.links.index(item)
-        limit_posts = limit_posts_to
-        print("index : ",index)
-        if index > limit_posts:
-            print("Access Limit of posts , returningg....!")
-            return
-        else:
-            driver.get(self.links[index])
-            time.sleep(30)
-            html = driver.page_source
-            bs = BeautifulSoup(html, 'html.parser')
-            self.ParsePostObject(bs,index,posts,base_url)
+        
+        
+        driver.get(self.links[index])
+        time.sleep(30)
+        html = driver.page_source
+        bs = BeautifulSoup(html, 'html.parser')
+        self.ParsePostObject(bs,index,posts,base_url)
             
         
     def ParsePostObject(self,soup,index,posts,base_url):
@@ -73,7 +69,7 @@ class Page:
                 date_post = soup.find('div',class_='news-detail-head')
 
                 if date_post is not None:
-                    date_post = soup.find('span').get_text().strip().replace('\n','')
+                    date_post = date_post.find('span').get_text().strip().replace('\n','')
 
                 thumbnail = soup.find('img', class_='img-responsive')
                 thumbnail_full_path = ''
@@ -138,6 +134,9 @@ def TransformToPageInfo(page:Page,config) -> list:
     posts = []
     print(f"Scrapper crawl total ${len(page.links)} posts ")
     for item in page.links:
+        print(f"post index : ${page.links.index(item)}")
+        if page.links.index(item) >= limit_posts_to:
+            return posts
         page.AccessPageItem(item, posts, base_url,limit_posts_to)
     return posts
 
